@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>Bootstrap Toast 練習</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="p-5">
+  <!-- 按鈕 -->
+  <button id="toastbtn" class="btn btn-outline-secondary">
+    <span>哭累素頭</span>
+  </button>
+
+  <style>
+    /* 讓按鈕用背景圖片填滿 */
+    #toastbtn 
+    {
+      position: relative;              /* 讓文字可以絕對定位 */
+      width: 300px;                    /* 按鈕寬度 */
+      height: 300px;                   /* 按鈕高度 */
+      background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRso04e1UyFB1Od2jKGvkhMUvk62UaDg0ajtg&s);     
+      background-size: cover;          /* 圖片填滿 */
+      background-position: center;     /* 圖片置中 */
+      border: 10px;
+      color: white;                  /* 文字顏色 */
+      font-weight: bold;               /* 文字加粗 */
+      text-align: center;              /* 文字置中 */
+      font-size: 225%;
+    }
+
+    /* 讓文字顯示在圖片上 */
+    #toastbtn span 
+    {
+      position: absolute;
+      top: 70%;                        
+      left: 50%;                       /* 水平置中 */
+      transform: translate(-50%, -30%);
+    }
+  </style>
+
+  <!-- Toast 元件 -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto">恭喜</strong>
+        <small>剛剛</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        陳之漢奸館長中三槍
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- 自訂 JS -->
+  <script>
+    document.getElementById("toastbtn").onclick = function()
+    {
+      var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+      var toastList = toastElList.map(function(toastEl) 
+      {
+        return new bootstrap.Toast(toastEl)
+      });
+      toastList.forEach(toast => toast.show())
+    }
+  /* 在 Bootstrap 5 裡，bootstrap.Toast 物件的預設行為就是：呼叫 .show() → 顯示 Toast。Toast 會自動在延遲時間 (delay) 結束後隱藏。預設的 delay 是 5000 毫秒 (5秒)，而且 autohide 預設是 true。 */
+  </script>
+</body>
+</html>
