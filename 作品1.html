@@ -19,30 +19,43 @@
   /* .baseball-board img:hover { transform: scale(1.05); cursor: pointer; /* 額外效果 hover觸碰縮放(不太喜歡) */
   
   .pos-btn { position: absolute; padding: 8px 12px; background: rgba(255,255,255,0.8); border: 5px solid black; border-radius: 10px; cursor: pointer; }
-  .pos-btn { position: absolute; transform: translate(-50%, -50%); /* 讓按鈕以中心對齊 */ }
+  .pos-btn { position: absolute; transform: translate(-50%, -50%); }
   .pos-btn:hover { background: rgba(255,255,0,0.9); /* hover 效果：亮起 */ }
   
-  .list { background: rgba(255, 255, 255, 0.8); margin-top: 20px; padding: 15px; border-radius: 8px; }
+  .list 
+  { 
+    background: rgba(255, 255, 255, 0.8); 
+    margin-top: 20px; 
+    padding: 15px; 
+    border-radius: 8px;
+    max-width: 90%;
+    max-height: 60vh;   
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
   
   .grid { display: flex; gap: 20px; flex-wrap: wrap; }
 
   .player-card { text-align: center; width: 120px; border: 2px solid; border-radius: 8px; padding: 10px; transition: background 0.3s ease, transform 0.3s ease; }
   /* hover 時背景顏色依照球隊不同 */ 
   .player-card:hover { transform: scale(1.05); }
-  .player-card:hover p[style*="台鋼雄鷹"], .player-card:hover { background: green; }
-  .player-card:hover p[style*="中信兄弟"], .player-card:hover { background: yellow; }
-  .player-card:hover p[style*="富邦悍將"], .player-card:hover { background: blue; }
-  .player-card:hover p[style*="樂天桃猿"], .player-card:hover { background: rgba(178, 34, 34, 0.2); }
-  .player-card:hover p[style*="統一獅"], .player-card:hover { background: orange; }
-  .player-card:hover p[style*="味全龍"], .player-card:hover { background: rgba(255, 0, 0, 0.2); }
-  .player-card:hover p[style*="美國職棒體系MLB"], .player-card:hover { background: rgba(12, 35, 64, 0.2); }
-  .player-card:hover p[style*="日本職棒體系NPB"], .player-card:hover { background: rgba(255, 215, 0, 0.2); }
-  .player-card:hover p[style*="韓國職棒體系KBO"], .player-card:hover { background: rgba(34, 139, 34, 0.2); }
+  .player-card:hover.台鋼雄鷹:hover { background: green; }
+  .player-card:hover.中信兄弟:hover { background: yellow; }
+  .player-card:hover.富邦悍將:hover { background: blue; }
+  .player-card:hover.樂天桃猿:hover { background: rgba(178, 34, 34, 0.2); }
+  .player-card:hover.統一獅:hover { background: orange; }
+  .player-card:hover.味全龍:hover { background: rgba(255, 0, 0, 0.2); }
+  .player-card:hover.美國職棒體系MLB:hover { background: rgba(12, 35, 64, 0.2); }
+  .player-card:hover.日本職棒體系NPB:hover { background: rgba(255, 215, 0, 0.2); }
+  .player-card:hover.韓國職棒體系KBO:hover { background: rgba(34, 139, 34, 0.2); }
 
-  .avatar { width: 100px; height: 100px; border-radius: 50%; cursor: pointer; transition: transform 0.3s ease; }
-  .avatar:hover { transform: scale(1.1); }
-
-  .dropdown { background: #eee; padding: 5px; margin-top: 5px; border-radius: 5px; }
+  .player-photo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; cursor: pointer; }
+  .player-photo:hover { transform: scale(1.1); }
+  .dropdown { background: #eee; padding: 5px; margin-top: 5px; border-radius: 5px; font-size:14px; }
   </style>
 </head>
 
@@ -131,9 +144,12 @@
   if (!players[position]) return;
   players[position].forEach(p => { 
     const card = document.createElement("div"); 
-    card.className = "player-card";
+    // 把球隊名稱裡的空格和特殊字元換成底線
+    const safeTeam = p.team.replace(/\s+/g, "_");
+    card.className = "player-card " + safeTeam;
+
     card.innerHTML = ` 
-      <img src="${p.img}" alt="${p.name}" class="avatar">
+      <img src="${p.img}" alt="${p.name}" class="player-photo">
       <p><strong>${p.name}</strong></p>
       <p>${p.team}</p>
       <div class="dropdown">${p.info}</div>
