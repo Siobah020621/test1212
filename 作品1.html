@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作品1_WBC32人集訓名單</title>
+  <style> 
+  body 
+  { 
+    margin: 0; padding: 0; height: 100vh;
+    background-image: url("https://ibw.bwnet.com.tw/ac_gallery/2024/11/8cd27d6d-61fc-57bb-5899-eb2f9ba8f113_620.jpg");
+    background-size: cover; background-position: center; background-repeat: no-repeat; display: flex; justify-content: center;
+    align-items: center;
+  }
+
+  .baseball-board { width: 37.5%; position: relative; aspect-ratio: 16/9; /* 固定比例 */ }
+  .baseball-board img { width: 100%; border-radius: 12px; opacity: 0.7; }
+  /* .baseball-board img:hover { transform: scale(1.05); cursor: pointer; /* 額外效果 hover觸碰縮放(不太喜歡) */
+  
+  .pos-btn { position: absolute; padding: 8px 12px; background: rgba(255,255,255,0.8); border: 5px solid black; border-radius: 10px; cursor: pointer; }
+  .pos-btn { position: absolute; transform: translate(-50%, -50%); /* 讓按鈕以中心對齊 */ }
+  .pos-btn:hover { background: rgba(255,255,0,0.9); /* hover 效果：亮起 */ }
+  
+  .list { background: rgba(255, 255, 255, 0.8); margin-top: 20px; padding: 15px; border-radius: 8px; }
+  
+  .grid { display: flex; gap: 20px; flex-wrap: wrap; }
+
+  .player-card { text-align: center; width: 120px; border: 2px solid; border-radius: 8px; padding: 10px; transition: background 0.3s ease, transform 0.3s ease; }
+  /* hover 時背景顏色依照球隊不同 */ 
+  .player-card:hover { transform: scale(1.05); }
+  .player-card:hover p[style*="台鋼雄鷹"], .player-card:hover { background: green; }
+  .player-card:hover p[style*="中信兄弟"], .player-card:hover { background: yellow; }
+  .player-card:hover p[style*="富邦悍將"], .player-card:hover { background: blue; }
+  .player-card:hover p[style*="樂天桃猿"], .player-card:hover { background: rgba(178, 34, 34, 0.2); }
+  .player-card:hover p[style*="統一獅"], .player-card:hover { background: orange; }
+  .player-card:hover p[style*="味全龍"], .player-card:hover { background: rgba(255, 0, 0, 0.2); }
+  .player-card:hover p[style*="美國職棒體系MLB"], .player-card:hover { background: rgba(12, 35, 64, 0.2); }
+  .player-card:hover p[style*="日本職棒體系NPB"], .player-card:hover { background: rgba(255, 215, 0, 0.2); }
+  .player-card:hover p[style*="韓國職棒體系KBO"], .player-card:hover { background: rgba(34, 139, 34, 0.2); }
+
+  .avatar { width: 100px; height: 100px; border-radius: 50%; cursor: pointer; transition: transform 0.3s ease; }
+  .avatar:hover { transform: scale(1.1); }
+
+  .dropdown { background: #eee; padding: 5px; margin-top: 5px; border-radius: 5px; }
+  </style>
+</head>
+
+<body>
+  <div class="baseball-board">
+    <img src="https://img.freepik.com/premium-vector/baseball-green-field-arrangement-players-sport-background-baseball-stadium-diamond-playground-template-with-white-lines_761284-467.jpg?semt=ais_hybrid&w=740&q=80" alt="棒球場">
+  <button class="pos-btn" style="top:10%; left:50%;" onclick="showPlayers('中外')">中外</button>
+  <button class="pos-btn" style="top:35%; left:50%;" onclick="showPlayers('二壘')">二壘</button>
+  <button class="pos-btn" style="top:60%; left:50%;" onclick="showPlayers('投手')">投手</button>
+  <button class="pos-btn" style="top:85%; left:50%;" onclick="showPlayers('捕手')">捕手</button>
+  <button class="pos-btn" style="top:55%; left:80%;" onclick="showPlayers('一壘')">一壘</button>
+  <button class="pos-btn" style="top:55%; left:20%;" onclick="showPlayers('三壘')">三壘</button>
+  <button class="pos-btn" style="top:40%; left:30%;" onclick="showPlayers('游擊')">游擊</button>
+  <button class="pos-btn" style="top:22%; left:90%;" onclick="showPlayers('右外')">右外</button>
+  <button class="pos-btn" style="top:22%; left:10%;" onclick="showPlayers('左外')">左外</button>
+</div>
+
+<div id="playerList" class="list"></div>
+
+<script>
+  const players = 
+{
+  投手:
+  [
+    { id: 1, name: "林凱威", team: "味全龍", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTYdD1AqgKrslgeVRicREukbsPe_hv7oyPIQ&s", info: "29歲,右投,善於滑球與指叉球,世界十二強冠軍成員" },
+    { id: 2, name: "古林睿煬", team: "日本職棒體系NPB", img: "https://www.event-fighters.jp/entertainment/wp-content/uploads/2025/02/player37.webp", info: "28歲,右投,現役日職火腿隊,素有台灣火球男美名" },
+    { id: 3, name: "林詩翔", team: "台鋼雄鷹", img: "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2025/05/13/98/32036202.jpg&s=Y&x=0&y=0&sw=1280&sh=853&exp=3600", info: "25歲,右投,2025年中職最佳新人及救援王" },
+    { id: 4, name: "李東洺", team: "富邦悍將", img: "https://s.yimg.com/ny/api/res/1.2/hQW7aiubsL2a8gy0.PjYVw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyOA--/https://media.zenfs.com/ko/tsna.com.tw/c0dbd963135135661809967fb17aa67d", info: "26歲,右投,上肩投球" },
+    { id: 5, name: "張奕", team: "富邦悍將", img: "https://hips.hearstapps.com/hmg-prod/images/yi-chang-of-team-chinese-taipei-reacts-in-the-6th-inning-news-photo-1732508187.jpg?crop=0.668xw:1.00xh;0.0785xw,0&resize=640:*", info: "31歲,右投,勝投怪盜,世界十二強冠軍成員" },
+    { id: 6, name: "陳冠宇", team: "樂天桃猿", img: "https://hips.hearstapps.com/hmg-prod/images/kuan-yu-chen-of-team-chinese-taipei-reacts-in-the-8th-news-photo-1732522588.jpg?crop=0.88932xw:1xh;center,top&resize=1200:*", info: "35歲,微笑左投,三朝元老,世界十二強冠軍成員" },
+    { id: 7, name: "王彥程", team: "韓國職棒體系KBO", img: "https://s.yimg.com/ny/api/res/1.2/FPMlOSFPN0sE7GCU3I6NTg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTg5Ng--/https://media.zenfs.com/zh-tw/gotv_ctitv_com_tw_678/6e95a1ea23b01ec6fdffbdef6b898aec", info: "25歲,左投,現役韓職韓華鷹隊" },
+    { id: 8, name: "張弘稜", team: "美國職棒體系MLB", img: "https://cdn2.ettoday.net/images/6135/e6135556.jpg", info: "24歲,右投,現役美職小聯盟1A+海盜隊" },
+    { id: 9, name: "鄭浩均", team: "中信兄弟", img: "https://www.ltsports.com.tw/media/webp/content/2022/08/11/%E4%B8%AD%E4%BF%A1%E5%85%84%E5%BC%9F%E6%96%B0%E8%81%9E%E7%A8%BF%E7%AC%AC%E4%B8%80%E6%8C%87%E5%90%8D_%E9%84%AD%E6%B5%A9%E5%9D%87.webp", info: "27歲,右投,2023年中職新人王" },
+    { id: 10, name: "吳俊偉", team: "中信兄弟", img: "https://gobaseball.gogoal.com.tw/wp-content/uploads/2024/11/LINE_ALBUM_2024113%E4%B8%AD%E8%8F%AF%E6%8D%B7%E5%85%8B%E4%BA%A4%E6%B5%81%E8%B3%BD_241107_1.jpg", info: "27歲,右投,象隊中繼王,世界十二強冠軍成員" },
+    { id: 11, name: "賴胤豪", team: "樂天桃猿", img: "https://cdn2.ettoday.net/images/8218/e8218520.jpg", info: "20歲,右投,2025年中職賽季防禦率2.61" },
+    { id: 12, name: "韋宏亮", team: "台鋼雄鷹", img: "https://imgs.tsna.com/article/1757156806_2GS5R.jpg", info: "20歲,右投,中職近8年來首位非旅外、非應屆高中生出身的投手狀元" },
+    { id: 13, name: "胡智為", team: "統一獅", img: "https://imgs.tsna.com/article/1648901555_x1Z1t.jpg", info: "33歲,右投,曾旅美並在光芒隊時期登上大聯盟" },
+    { id: 14, name: "曾峻岳", team: "富邦悍將", img: "https://img.ltn.com.tw/Upload/sports/page/800/2024/10/06/phpcpSrlr.jpg", info: "25歲,右投,中職最年輕50次救援成功締造者" },
+    { id: 15, name: "莊昕諺", team: "樂天桃猿", img: "https://s.yimg.com/ny/api/res/1.2/ueuWjePwY58DXYwGfYjsxw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTM2MA--/https://media.zenfs.com/ko/news_ttv_com_tw_433/dd8733d07a45afbd1e9ae6282efda67f", info: "25歲,右投,世界十二強冠軍成員" },
+    { id: 16, name: "孫易磊", team: "日本職棒體系NPB", img: "https://cc.tvbs.com.tw/img/upload/2025/05/22/20250522135534-7e075aa1.jpg", info: "20歲,右投,現役日職火腿隊,譽有台湾の至宝之美名" },
+  ],
+  捕手: 
+  [
+    { id: 17, name: "吉力吉撈．鞏冠", team: "味全龍", img: "https://img.ltn.com.tw/Upload/sports/page/800/2024/11/23/phpggQZze.jpg", info: "31歲,右打,繼鋒哥、大師兄及柏融大王後,第一本土重砲手,世界十二強冠軍成員" },
+    { id: 18, name: "林家正", team: "美國職棒體系MLB", img: "https://s.yimg.com/ny/api/res/1.2/xHhB0ORQNpunEUmYS3DOKQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/zh-tw/tsna.com.tw/8b0afea716567c299024a549844e9623", info: "28歲,右打,接捕、掌握大局、管理投手群的能力極為優秀,去年遭MLB運動家2A釋出成為自由球員,世界十二強冠軍成員" },
+    { id: 19, name: "蔣少宏", team: "味全龍", img: "https://img.ltn.com.tw/Upload/sports/page/800/2024/03/30/phpVwQWJp.jpg", info: "28歲,右打,2023年與2025年獲中職金手套獎(捕手)" },
+    { id: 20, name: "戴培峰", team: "富邦悍將", img: "https://www.fubonguardians.com/UploadFolder/file/players/5e671c56-b3ce-465a-8099-67e691242f3b.jpg", info: "25歲,左打,曾獲中職2024年年度捕手金手套及年度最佳捕手,世界十二強冠軍成員" },
+  ],
+  一壘:
+  [
+    { id: 21 , name: "王博玄", team: "台鋼雄鷹", img: "https://s.yimg.com/ny/api/res/1.2/5Wq5XyxBcq4v2n6lNtbn9g--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTY0MA--/https://media.zenfs.com/ko/taisounds_com_380/253e88e8ad4ebf32861c694632fa19e1", info: "25歲,左打,因其名音與王柏融相似,但兩位表現呈黃金交叉,故頂替王柏融接下「博玄大王」之名" },
+  ],
+  二壘:
+  [
+    { id: 22, name: "林子偉", team: "樂天桃猿", img: "https://s.yimg.com/ny/api/res/1.2/0YaaNunfrjqKUnvgJq1Srg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/ko/tsna.com.tw/7bf991ded244254c2d2c7caec712d49a", info: "31歲,左打,曾在美職打滾多年,是台灣第13位登上大聯盟的球員,因其優異的內野守備能力而聞名" },
+  ],
+  三壘:
+  [
+    { id: 23, name: "吳念庭", team: "台鋼雄鷹", img: "https://www.tsghawks.com/wp-content/uploads/2024/03/39_%E5%90%B3%E5%BF%B5%E5%BA%AD-810x1024.png", info: "32歲,左打,在回中職之前,曾於日職西武獅隊效力八年,擁有豐富的旅外經歷" },
+  ],
+  游擊:
+  [
+    { id: 24, name: "鄭宗哲", team: "美國職棒體系MLB", img: "https://s.yimg.com/ny/api/res/1.2/lvF.0.4PkWc3FEKxD01Blg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTgwMA--/https://media.zenfs.com/en/ftnn_com_tw_939/7df913b4946d746734cb196ce5102fa4", info: "24歲,左打,短暫升上大聯盟殿堂,成為台灣第18位、第6位大聯盟野手,目前在小聯盟3A漂泊" },
+    { id: 25, name: "張政禹", team: "味全龍", img: "https://s.yimg.com/ny/api/res/1.2/qgGJJvuIgd29XYEst4N_Vg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/ko/ftvn.com.tw/ccbd9f4301f3857928391ed8f21fa726", info: "25歲,左打,曾捲入德撲醜聞風波,世界十二強冠軍成員" },
+    { id: 26, name: "張育成", team: "富邦悍將", img: "https://hips.hearstapps.com/hmg-prod/images/%EF%BD%99%EF%BD%83-640ece10a78a4.png?crop=0.497xw:0.994xh;0.503xw,0&resize=640:*", info: "30歲,右打,綽號國防部長,曾短暫站穩大聯盟先發,為台灣第16位登上大聯盟的選手" },
+    { id: 27, name: "江坤宇", team: "中信兄弟", img: "https://imgs.tsna.com/article/1732253376_1igoS.jpg", info: "25歲,右打,綽號小可愛,是中職金手套和最佳十人獎的常客,世界十二強冠軍成員" },
+  ],
+  左外:
+  [
+    { id: 28 , name: "宋晟睿", team: "中信兄弟", img: "https://s.yimg.com/ny/api/res/1.2/hVi1WoouG0oSQXA7KJExiQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/zh-tw/__534/88c457771d2992756742e85bf1574651", info: "23歲,右打,早期以二刀流投打兼備聞名,2025年獲中職外野手最佳十人" },
+  ],
+  中外:
+  [
+    { id: 29, name: "陳傑憲", team: "統一獅", img: "https://v3-statics.mirrormedia.mg/images/4aea41d4-35df-4e1b-b93a-3af03f4a9187-w800.webP", info: "32歲,左打,綽號四爺及台灣隊長,近年發揮十分活躍,是中職的靈魂人物,世界十二強冠軍成員" },
+    { id: 30, name: "陳晨威", team: "樂天桃猿", img: "https://hips.hearstapps.com/hmg-prod/images/chen-wei-chen-of-team-chinese-taipei-reacts-after-hitting-a-news-photo-1732688769.jpg?crop=1.00xw:0.835xh;0,0.0867xh", info: "28歲,左打,中職盜壘王常客,世界十二強冠軍成員" },
+  ],
+  右外:
+  [
+    { id: 31, name: "邱智呈", team: "統一獅", img: "https://bucket-image.inkmaginecms.com/1/image/2024/11/06a38393-4d16-491a-9bb5-4c06c51eba21.jpg", info: "25歲,左打,曾於2024年獲中職安打王和最佳十人外野手獎,並兩度入選明星賽,世界十二強冠軍成員" },
+    { id: 32, name: "林安可", team: "日本職棒體系NPB", img: "https://twbsball.dils.tku.edu.tw/wiki/images/4/40/%E6%9E%97%E5%AE%89%E5%8F%AF_20210721.jpg", info: "28歲,左打,因聯賽及國際賽的出色表現於今年被日職西武獅隊簽下,世界十二強冠軍成員" },
+  ]
+};
+  function showPlayers(position)
+{
+  const list = document.getElementById("playerList"); list.innerHTML = "";
+  if (!players[position]) return;
+  players[position].forEach(p => { 
+    const card = document.createElement("div"); 
+    card.className = "player-card";
+    card.innerHTML = ` 
+      <img src="${p.img}" alt="${p.name}" class="avatar">
+      <p><strong>${p.name}</strong></p>
+      <p>${p.team}</p>
+      <div class="dropdown">${p.info}</div>
+    `; 
+    list.appendChild(card); 
+   }); 
+  } 
+</script>
+</body>
+</html>
